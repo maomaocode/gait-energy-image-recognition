@@ -57,19 +57,10 @@ def load_training_validation_data(train_view=None, val_view=None, train_dir=None
     return training_x, training_y, validation_x, validation_y
 
 
-def output_result(view_list, correct_tbl):
+def output_result(correct_tbl):
     logger.info("every row means the validation result from different training views")
-    logger.info("\t\t" + "\t\t".join(view_list))
-    for val_view in view_list:
-        output = "%s\t" % val_view
-        for train_view in view_list:
-            key = "%s-%s" % (train_view, val_view)
-            if key in correct_tbl:
-                precision = correct_tbl[key]
-            else:
-                precision = 0.0
-            output += "%.2f\t" % precision
-        logger.info(output)
+    for key in correct_tbl.keys():
+        logger.info("The precision of view-%s is : %.2f\t",key, correct_tbl[key])
 
 if __name__ == '__main__':
     level = logging.INFO
@@ -80,11 +71,6 @@ if __name__ == '__main__':
     correct_tbl = {}
     for train_view in view_list:
         for val_view in view_list:
-            correct_tbl["%s-%s" % (train_view, val_view)] = 0
-    output_result(view_list, correct_tbl)
+            correct_tbl["%s" % train_view] = 0
+    output_result(correct_tbl)
 
-    # training_x, training_y, validation_x, validation_y = load_training_validation_data()
-    # count = 0
-    # for x in training_x:
-    #     count += 1
-    #     imsave("%s/%03d.bmp" % (config.project.test_data_path, count), x)

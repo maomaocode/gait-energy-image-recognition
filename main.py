@@ -1,4 +1,3 @@
-__author__ = 'fucus'
 import logging
 from data_tool import load_training_validation_data
 from model.models import RandomForestClassification
@@ -19,7 +18,7 @@ logging.basicConfig(level=level,
 if __name__ == '__main__':
     view_list = ["%03d" % x for x in range(0, 181, 18)]
     train_dir = ["nm-%02d" % i for i in range(1, 5)]
-    val_dir = ["cl-01", "cl-02"]
+    val_dir = ["nm-05","nm-06"]
 
     # "{train_view}-{val_view}" as key, "090-072" means 090 as train data, 072 as validation data
     correct_tbl = {}
@@ -36,10 +35,10 @@ if __name__ == '__main__':
         model = RandomForestClassification()
         model.fit(x_train=training_feature_x, y_train=training_y)
         predict_y = model.predict(validation_feature_x)
-        correct_count = sum(predict_y == validation_y)
+        correct_count = len([x for x, y in zip(predict_y, validation_y) if x == y])
         correct_percent = correct_count * 1.0 / len(predict_y)
-        correct_tbl["%s-%s" % (train_view, val_view)] = correct_percent
+        correct_tbl["%s" % train_view] = correct_percent
 
         logger.info("train by %s, val by %s, precision %d/%d %.3f" % (train_view, val_view, correct_count, len(predict_y), correct_percent))
 
-    data_tool.output_result(view_list, correct_tbl)
+    data_tool.output_result(correct_tbl)

@@ -8,7 +8,7 @@ class Project:
     # the CASIA gait dataset B path, you can download the data from
     # CASIA website, the dirtory contains a lot sub dirtory
     # named such as 001,002...
-    casia_dataset_b_path = "/Volumes/Passport/data/CASIA_full_gait_data_set/DatasetB/silhouettes"
+    casia_dataset_b_path = "/Users/ymao/GaitDatasetB-silh"
 
     casia_test_img = "%s/001/bg-01/090/001-bg-01-090-038.png" % casia_dataset_b_path
 

@@ -4,6 +4,7 @@ from scipy.misc import imresize
 import numpy as np
 import os
 import logging
+from config import Project
 
 logger = logging.getLogger("tool")
 
@@ -224,7 +225,7 @@ def img_path_to_GEI(img_path):
     """
 
     id = img_path.replace("/", "_")
-    cache_file = "%s/%s_GEI.npy" % (config.Project.test_data_path, id)
+    cache_file = "%s/%s_GEI.npy" % (Project.test_data_path, id)
     if os.path.exists(cache_file) and os.path.isfile(cache_file):
         return np.load(cache_file)
     img_list = load_image_path_list(img_path)
